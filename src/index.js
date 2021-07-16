@@ -1,6 +1,10 @@
 import './sass/main.scss';
 import fetchCountries from './js/fetchCountries.js';
-import '@pnotify/core/dist/BrightTheme.css';
+import { error } from "@pnotify/core";
+import "@pnotify/core/dist/PNotify.css";
+import "@pnotify/core/dist/BrightTheme.css";
+import * as Confirm from "@pnotify/confirm";
+import "@pnotify/confirm/dist/PNotifyConfirm.css";
 import { alert } from '@pnotify/core';
 import countryExample from './templates/countryExample.hbs';
 import allCountries from './templates/allCountries.hbs';
@@ -30,7 +34,7 @@ function renderCountryMarkup(countries) {
         renderCountry(countries);
     } else
         if (countries.length >= 2 && countries.length <= 10) {
-            renderCountries(countries);
+            CreateListCountries(countries);
         } else {
             errorResult()
         };
@@ -51,9 +55,9 @@ function renderCountry(countries) {
     });
 };
 
-function renderCountries(countries) {
-    const allCountriesArray = countries.map(country => country.name);
-    refs.render.innerHTML = allCountries(allCountriesArray);
+function CreateListCountries(countries) {
+    const countriesList = countries.map(country => `<li>${country.name}</li>`).join('');
+    return (refs.countries.innerHTML = countriesList);
 };
 
 function onCatch(error) {
